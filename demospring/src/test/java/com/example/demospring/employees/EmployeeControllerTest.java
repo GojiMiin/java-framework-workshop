@@ -26,12 +26,12 @@ public class EmployeeControllerTest {
 
     @Test
     void getEmployeeById() {
-        int id = 20;
-        EmployeeResponse[] result
-                = restTemplate.getForObject("/employees/"+id, EmployeeResponse[].class);
+        int id = 100;
+        EmployeeResponse result
+                = restTemplate.getForObject("/employees/"+id, EmployeeResponse.class);
         //Assert
-        assertEquals(1, result.length);
-        assertEquals( 20, result[0].getId());
+        assertEquals(100, result.getId());
+        assertEquals( "Supachet", result.getName());
     }
 
 }
