@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://35.198.254.195:3306/account
+    username: user01
+    password: password
+    initialization-mode: always
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+jpa:
+  show_sql: true
+  hibernate:
+    ddl-auto: none
+  properties:
+    hibernate:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+server:
+  port: 8080
+info:
+  hello:
+    "I am a service"
+management:
+  security:
+    enabled: false
+  endpoints.web.exposure.include: metrics,httptrace,prometheus
