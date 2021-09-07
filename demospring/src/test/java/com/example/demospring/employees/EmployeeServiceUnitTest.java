@@ -45,4 +45,16 @@ class EmployeeServiceUnitTest {
         }
     }
 
+    @Test
+    public void junit5_exception() {
+
+        when(employeeRepository.findById(1)).thenReturn(Optional.empty());
+
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        Exception exception = assertThrows(EmployeeNotFoundException.class, () -> {
+            employeeService.getById(1);
+        });
+        assertEquals("Employee not found id=1", exception.getMessage());
+    }
+
 }
