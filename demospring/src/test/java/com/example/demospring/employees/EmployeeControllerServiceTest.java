@@ -1,41 +1,36 @@
 package com.example.demospring.employees;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class EmployeeControllerTest {
+public class EmployeeControllerServiceTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
+    @MockBean
     private EmployeeRepository employeeRepository;
 
-    @AfterEach
-    public void deleteDataForTest() {
-        employeeRepository.deleteAll();
-    }
 
     @Test
-    public void getAll() {
-        EmployeeResponse[] result
-                = restTemplate.getForObject("/employees", EmployeeResponse[].class);
-        //Assert
-        assertEquals(2, result.length);
-        assertEquals(1, result[0].getId());
-        assertEquals("Supachet", result[0].getName());
-    }
-
-    @Test
+    @DisplayName("Success Case")
     void getEmployeeById() {
         int id = 1;
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setName("Supachet");
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(employee));
 
         Employee employee001 = new Employee();
         employee001.setName("Supachet");
@@ -44,7 +39,7 @@ public class EmployeeControllerTest {
         EmployeeResponse result
                 = restTemplate.getForObject("/employees/"+id, EmployeeResponse.class);
         //Assert
-        assertEquals(id, result.getId());
+        assertEquals(1, result.getId());
         assertEquals( "Supachet", result.getName());
     }
 
