@@ -7,8 +7,12 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
-    @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public EmployeeResponse getById(int id) {
         Optional<Employee> result = employeeRepository.findById(id);
