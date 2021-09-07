@@ -29,4 +29,20 @@ class EmployeeServiceUnitTest {
         assertEquals("Mock Name", result.getName());
     }
 
+    @Test
+    public void employee_not_found() {
+
+        when(employeeRepository.findById(1)).thenReturn(Optional.empty());
+
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        try{
+            employeeService.getById(1);
+            fail();
+        } catch (Exception e) {
+            if(!"".equals(e.getMessage())){
+                fail("Message fail with = " + e.getMessage());
+            }
+        }
+    }
+
 }
